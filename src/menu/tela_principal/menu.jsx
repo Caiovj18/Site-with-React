@@ -103,22 +103,11 @@ function Menu() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Menu - Lista de Usuários</h1>
+    <div className="menu-container">
+      <h1 className="menu-title">Menu - Lista de Usuários</h1>
 
       {/* Botão Voltar */}
-      <button
-        onClick={() => navigate(-1)}
-        style={{
-          marginBottom: "20px",
-          background: "#444",
-          color: "#fff",
-          padding: "8px 15px",
-          borderRadius: "8px",
-          cursor: "pointer",
-          border: "none"
-        }}
-      >
+      <button onClick={() => navigate(-1)} className="back-button">
         ← Voltar
       </button>
 
@@ -128,22 +117,24 @@ function Menu() {
         placeholder="Pesquisar por nome"
         value={pesquisa}
         onChange={(e) => setPesquisa(e.target.value)}
-        style={{ padding: "8px", width: "300px", marginBottom: "20px" }}
+        className="search-input"
       />
 
       {/* Botão Adicionar */}
-      <button onClick={handleAdicionar} style={{ marginLeft: "20px" }}>
+      <button onClick={handleAdicionar} className="add-button">
         Adicionar Pessoa
       </button>
 
       {/* Lista de usuários */}
-      <ul>
+      <ul className="users-list">
         {usuariosFiltrados.map((usuario) => (
-          <li key={usuario.id} style={{ marginBottom: "10px" }}>
-            <strong>{usuario.nome}</strong> - {usuario.email}
+          <li key={usuario.id} className="user-item">
+            <div className="user-info">
+              <strong>{usuario.nome}</strong> - {usuario.email}
+            </div>
             <button
               onClick={() => handleEditar(usuario)}
-              style={{ marginLeft: "10px" }}
+              className="edit-button"
             >
               Editar
             </button>
@@ -153,14 +144,7 @@ function Menu() {
 
       {/* Formulário (editar ou adicionar) */}
       {(editando || adicionando) && (
-        <div
-          style={{
-            marginTop: "20px",
-            padding: "15px",
-            border: "1px solid #ccc",
-            borderRadius: "5px"
-          }}
-        >
+        <div className="form-container">
           <h2>{adicionando ? "Adicionar Nova Pessoa" : "Editando Usuário"}</h2>
           <input
             type="text"
@@ -168,58 +152,68 @@ function Menu() {
             value={formData.nome}
             onChange={handleChange}
             placeholder="Nome"
+            className="form-input"
           />
-          <br />
           <input
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
             placeholder="E-mail"
+            className="form-input"
           />
-          <br />
           <input
             type="text"
             name="cpf"
             value={formData.cpf}
             onChange={handleChange}
             placeholder="CPF"
+            className="form-input"
           />
-          <br />
           <input
             type="text"
             name="telefone"
             value={formData.telefone}
             onChange={handleChange}
             placeholder="Telefone"
+            className="form-input"
           />
-          <br />
           <input
             type="text"
             name="dataNascimento"
             value={formData.dataNascimento}
             onChange={handleChange}
             placeholder="Data de Nascimento"
+            className="form-input"
           />
-          <br />
-          {adicionando ? (
-            <button onClick={handleSalvarNovo} disabled={!validarCampos()}>
-              Salvar Novo
+          <div className="form-buttons">
+            {adicionando ? (
+              <button 
+                onClick={handleSalvarNovo} 
+                disabled={!validarCampos()}
+                className="save-button"
+              >
+                Salvar Novo
+              </button>
+            ) : (
+              <button 
+                onClick={handleSalvarEdicao} 
+                disabled={!validarCampos()}
+                className="save-button"
+              >
+                Salvar Edição
+              </button>
+            )}
+            <button
+              onClick={() => {
+                setEditando(null);
+                setAdicionando(false);
+              }}
+              className="cancel-button"
+            >
+              Cancelar
             </button>
-          ) : (
-            <button onClick={handleSalvarEdicao} disabled={!validarCampos()}>
-              Salvar Edição
-            </button>
-          )}
-          <button
-            onClick={() => {
-              setEditando(null);
-              setAdicionando(false);
-            }}
-            style={{ marginLeft: "10px" }}
-          >
-            Cancelar
-          </button>
+          </div>
         </div>
       )}
     </div>
