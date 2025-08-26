@@ -162,7 +162,7 @@ function Menu() {
             placeholder="E-mail"
             className="form-input"
           />
-          <input
+          <input  
             type="text"
             name="cpf"
             value={formData.cpf}
